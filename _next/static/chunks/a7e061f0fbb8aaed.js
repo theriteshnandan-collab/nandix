@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AETHER Sovereign Seed</title>
-    <script src="https://esm.sh/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
     <style>
         body { background: #000; color: #00ffff; font-family: 'Courier New', monospace; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
         .loader { text-align: center; max-width: 500px; padding: 2rem; border: 1px solid rgba(0, 255, 255, 0.2); background: rgba(0, 20, 20, 0.9); backdrop-filter: blur(10px); }
@@ -21,7 +21,7 @@
 </head>
 <body>
     <div class="loader">
-        <h2>AETHER_SEED_v1.1</h2>
+        <h2>AETHER_SEED_v1.2</h2>
         <p id="status">Initializing Protocol...</p>
         <div class="bar" id="progress"></div>
         <p id="details">Waiting for Mesh...</p>
