@@ -182,29 +182,40 @@ export function AetherProvider({ children }: { children: React.ReactNode }) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AETHER Sovereign Seed</title>
-    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <script src="https://esm.sh/peerjs@1.5.4/dist/peerjs.min.js"></script>
     <style>
-        body { background: #000; color: #00ffff; font-family: 'JetBrains Mono', monospace; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
-        .loader { text-align: center; max-width: 400px; padding: 2rem; border: 1px solid rgba(0, 255, 255, 0.2); background: rgba(0, 20, 20, 0.8); backdrop-filter: blur(10px); }
+        body { background: #000; color: #00ffff; font-family: 'Courier New', monospace; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+        .loader { text-align: center; max-width: 500px; padding: 2rem; border: 1px solid rgba(0, 255, 255, 0.2); background: rgba(0, 20, 20, 0.9); backdrop-filter: blur(10px); }
         .bar { height: 2px; width: 0%; background: #00f0ff; margin: 1rem 0; box-shadow: 0 0 10px #00ffff; transition: width 0.3s; }
-        .glitch { animation: glitch 1s infinite alternate; }
-        @keyframes glitch { 0% { opacity: 0.8; transform: translate(0); } 100% { opacity: 1; transform: translate(1px, -1px); } }
+        .error { color: #ff5555; display: none; margin-top: 1rem; font-size: 0.8em; border: 1px solid #ff5555; padding: 1rem; background: rgba(50,0,0,0.5); }
+        .code { background: #111; padding: 4px; border-radius: 4px; color: #fff; }
     </style>
 </head>
 <body>
     <div class="loader">
-        <h2 class="glitch">AETHER_SEED_v1.0</h2>
-        <p id="status">Connecting to Pioneer: ${peerId}</p>
+        <h2>AETHER_SEED_v1.1</h2>
+        <p id="status">Initializing Protocol...</p>
         <div class="bar" id="progress"></div>
-        <p id="details">Synchronizing with Mesh...</p>
+        <p id="details">Waiting for Mesh...</p>
+        <div id="error" class="error"></div>
     </div>
 
     <script>
         const PIONEER_ID = "${peerId}";
-        const peer = new Peer();
         const statusEl = document.getElementById('status');
         const progressEl = document.getElementById('progress');
         const detailsEl = document.getElementById('details');
+        const errorEl = document.getElementById('error');
+
+        // Check for file:// protocol limitation
+        if (window.location.protocol === 'file:') {
+            errorEl.style.display = 'block';
+            errorEl.innerHTML = "<strong>🛑 BROWSER SECURITY LOCK DETECTED</strong><br/><br/>Modern browsers block Sovereign Service Workers on 'file://'.<br/>To manifest this node, you must serve it.<br/><br/>Run this in your terminal folder:<br/><code class='code'>npx http-server .</code><br/><br/>Then open the localhost URL.";
+            statusEl.innerText = "Protocol Paused";
+            throw new Error("Local file execution blocked");
+        }
+
+        const peer = new Peer();
 
         peer.on('open', () => {
             statusEl.innerText = "Sovereign Link Established.";
