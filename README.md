@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌌 NANDIX — The Sovereign Deployment
 
-## Getting Started
+**$0 Infrastructure. Total Independence. Unkillable by Design.**
 
-First, run the development server:
+NANDIX is a fully decentralized web application powered by the **AETHER Mesh** — a peer-to-peer runtime that replaces AWS, Vercel, and every cloud provider with your users' own devices.
+
+---
+
+## Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+Static output is generated in `out/`. Deploy anywhere — or nowhere. The mesh handles the rest.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Architecture
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Layer | Role | Technology |
+|:---|:---|:---|
+| **Transport** | Peer Discovery & Data Relay | WebRTC (PeerJS) |
+| **Persistence** | Local-First Storage | IndexedDB |
+| **Security** | Identity & Encryption | ECDSA + AES-GCM + Shamir SSS |
+| **Economy** | Incentive Layer | Aether Credits (AEX) + Multi-Witnessing |
+| **AI** | Edge Inference | Transformers.js (WASM) |
+| **Distribution** | Self-Replication | Sovereign Seed Protocol + Service Worker |
 
-## Deploy on Vercel
+## The Sovereign Seed
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+NANDIX doesn't need a URL. Click **"Manifest Sovereign Seed"** in the HUD to export a single `seed.html` file. Share it. Anyone who opens it joins the mesh and becomes a host. No servers required.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tech Stack
+
+- **Next.js 16** (App Router, Static Export)
+- **TypeScript 5** (Strict, Zero `any`)
+- **Tailwind CSS 4**
+- **Framer Motion** (Micro-interactions)
+- **PeerJS** (WebRTC Mesh)
+
+---
+
+*Built with sovereignty. Powered by the mesh.*
