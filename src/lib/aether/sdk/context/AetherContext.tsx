@@ -215,7 +215,8 @@ export function AetherProvider({ children }: { children: React.ReactNode }) {
                 progressEl.style.width = "30%";
 
                 // Request bootstrap manifest
-                conn.send({ type: "ASSET_REQUEST", path: "sw.js" });
+                const basePath = "${process.env.NODE_ENV === 'production' ? '/nandix/' : '/'}";
+                conn.send({ type: "ASSET_REQUEST", path: basePath + "sw.js" });
 
                 conn.on('data', async (pkg) => {
                     if (pkg.type === "ASSET_RESPONSE") {
@@ -229,12 +230,12 @@ export function AetherProvider({ children }: { children: React.ReactNode }) {
                         let currentProgress = parseInt(progressEl.style.width);
                         progressEl.style.width = (currentProgress + 15) + "%";
 
-                        if (pkg.path === "sw.js") {
-                            navigator.serviceWorker.register('sw.js');
-                            conn.send({ type: "ASSET_REQUEST", path: "index.html" });
+                        if (pkg.path.endsWith("sw.js")) {
+                            navigator.serviceWorker.register(basePath + 'sw.js');
+                            conn.send({ type: "ASSET_REQUEST", path: basePath + "index.html" });
                         }
 
-                        if (pkg.path === "index.html") {
+                        if (pkg.path.endsWith("index.html")) {
                             progressEl.style.width = "100%";
                             statusEl.innerText = "Actualization Complete.";
                             setTimeout(() => {

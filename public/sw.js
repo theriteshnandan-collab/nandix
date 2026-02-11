@@ -1,8 +1,8 @@
 const CACHE_NAME = 'aether-cache-v1';
 const ASSETS_TO_CACHE = [
-    '/',
-    '/manifest.json',
-    '/favicon.ico',
+    './',
+    'manifest.json',
+    'favicon.ico',
 ];
 
 self.addEventListener('install', (event) => {
@@ -57,7 +57,7 @@ self.addEventListener('fetch', (event) => {
                             });
                             resolve(response);
                         } else {
-                            resolve(caches.match('/')); // Total failure fallback
+                            resolve(caches.match('./')); // Total failure fallback
                         }
                     };
 

@@ -12,17 +12,20 @@ const firaCode = Fira_Code({
   subsets: ["latin"],
 });
 
+const isProd = process.env.NODE_ENV === 'production';
+const basePath = isProd ? "/nandix" : "";
+
 export const metadata: Metadata = {
   title: "NANDIX | The Sovereign Deployment",
   description: "Powered by AETHER P2P Infrastructure.",
-  manifest: "/manifest.json",
+  manifest: `${basePath}/manifest.json`,
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "AETHER",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: `${basePath}/favicon.ico`,
   },
 };
 
