@@ -21,7 +21,7 @@
 </head>
 <body>
     <div class="loader">
-        <h2>AETHER_SEED_v1.2</h2>
+        <h2>AETHER_SEED_v1.3</h2>
         <p id="status">Initializing Protocol...</p>
         <div class="bar" id="progress"></div>
         <p id="details">Waiting for Mesh...</p>
@@ -43,12 +43,44 @@
             throw new Error("Local file execution blocked");
         }
 
-        const peer = new Peer();
+        const peer = new Peer(undefined, {
+            debug: 2,
+            config: {
+                iceServers: [
+                    { urls: 'stun:stun.l.google.com:19302' },
+                    { urls: 'stun:global.stun.twilio.com:3478' }
+                ]
+            }
+        });
 
-        peer.on('open', () => {
+        const connectionTimeout = setTimeout(() => {
+            if (statusEl.innerText.includes("Initializing")) {
+                statusEl.innerText = "Connection Stalled.";
+                detailsEl.innerHTML = "Mesh not reachable. <br/>Check network/firewall.";
+                errorEl.style.display = 'block';
+                errorEl.innerHTML = "<strong>TIMEOUT:</strong><br/>PeerJS Cloud did not respond.<br/>Try disabling AdBlock or Tracking Prevention.";
+            }
+        }, 15000);
+
+        peer.on('open', (id) => {
+            clearTimeout(connectionTimeout);
             statusEl.innerText = "Sovereign Link Established.";
-            const conn = peer.connect(PIONEER_ID);
+            detailsEl.innerText = "Targeting Pioneer: " + PIONEER_ID;
+            progressEl.style.width = "30%";
+            setTimeout(() => {
+                const conn = peer.connect(PIONEER_ID);
+                setupConnection(conn);
+            }, 1000);
+        });
 
+        peer.on('error', (err) => {
+            console.error("Peer Error:", err);
+            clearTimeout(connectionTimeout);
+            errorEl.style.display = 'block';
+            errorEl.innerHTML += "<strong>CONNECTION ERROR:</strong> " + err.type + "<br/>" + err.message + "<br/><br/>";
+        });
+
+        function setupConnection(conn) {
             conn.on('open', () => {
                 statusEl.innerText = "Synchronizing Assets...";
                 progressEl.style.width = "30%";
